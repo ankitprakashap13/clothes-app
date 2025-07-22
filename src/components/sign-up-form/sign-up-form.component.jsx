@@ -26,8 +26,10 @@ const SignUpForm = () => {
             return;
         }
         try {
-            const response = await createAuthUserWithEmailAndPassword(formFields.email, formFields.password);
-            const { user } = response;
+            const { user } = await createAuthUserWithEmailAndPassword(
+                email,
+                password
+            );
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
         } catch (e) {
@@ -42,7 +44,7 @@ const SignUpForm = () => {
 
     return (
         <div className="sign-up-container">
-            <h1>Sign up with your email and password</h1>
+            <h1>Sign up</h1>
             <form onSubmit={handleOnSubmit}>
                 <FormInput
                     label="Display Name"
@@ -52,7 +54,6 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     value={displayName}
                 />
-
                 <FormInput
                     label="Email"
                     type="email"
@@ -61,7 +62,6 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     value={email}
                 />
-
                 <FormInput
                     label="Password"
                     type="password"
@@ -70,7 +70,6 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     value={password}
                 />
-
                 <FormInput
                     label="Confirm Password"
                     type="password"
@@ -79,7 +78,6 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     value={confirmPassword}
                 />
-
                 <Button type="submit">Sign Up</Button>
             </form>
         </div>
