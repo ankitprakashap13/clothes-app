@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const addCartItem = (cartItems, productToAdd) => {
     console.log("productToAdd", productToAdd);
@@ -26,16 +26,23 @@ export const CartContext = createContext({
     showCartDropdown: false,
     setShowCartDropdown: () => {},
     cartItems: [],
-    addItemToCart: () => {}
+    addItemToCart: () => {},
+    cartCount: 0
 });
 
 export const CartProvider = ({ children }) => {
     const [showCartDropdown, setShowCartDropdown] = useState(false);
     const [cartItems, setCartItems] = useState([]);
+    const [cartCount, setCartCount] = useState([]);
 
     const addItemToCart = (productToAdd) => {
         setCartItems(addCartItem(cartItems, productToAdd));
     }
+
+    useEffect(() => {
+        const count = cartItems.reduce((total, item) => total + item.quantity, 0);
+        setCartCount(count);
+    }, [cartItems])
 
     return (
         <CartContext.Provider
@@ -43,7 +50,8 @@ export const CartProvider = ({ children }) => {
                 showCartDropdown,
                 setShowCartDropdown,
                 cartItems,
-                addItemToCart
+                addItemToCart,
+                cartCount
             }}
         >
             {children}

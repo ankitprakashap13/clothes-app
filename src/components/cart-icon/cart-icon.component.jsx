@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { CartContext } from "../../contexts/cart.context";
 
 const CartIcon = () => {
-    const { showCartDropdown, setShowCartDropdown } = useContext(CartContext);
+    const { showCartDropdown, setShowCartDropdown, cartCount } = useContext(CartContext);
 
     return (
         <div
@@ -12,7 +12,7 @@ const CartIcon = () => {
             onClick={() => setShowCartDropdown(!showCartDropdown)}
         >
             <ShoppingIcon className='shopping-icon' />
-            <span className="item-count">0</span>
+            <span className="item-count">{cartCount}</span>
         </div>
     );
 }
